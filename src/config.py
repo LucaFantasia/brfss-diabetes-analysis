@@ -1,5 +1,5 @@
 """
-Project configuration for the CDC BRFSS diabetes classification experiments.
+Project configuration for the CDC BRFSS diabetes classification models.
 
 This file stores shared constants used by the modelling pipeline, including
 dataset paths, feature groups, train/validation/test proportions, cross-validation

@@ -8,21 +8,27 @@ workflow and highlights the main final results.
 import plotly.express as px
 import streamlit as st
 
-from utils import TARGET, load_data, load_model_results
+from utils import (
+    TARGET, 
+    load_data, 
+    load_model_results
+)
 
 
 df = load_data()
 _, validation_results, test_results, _ = load_model_results()
 
 st.title("CDC BRFSS Diabetes Analysis")
-st.caption("Exploratory analysis · Statistical testing · Imbalanced classification")
+st.caption("Exploratory Data Analysis | Statistical Testing | Imbalanced Classification")
 
+dataset_url = "https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data"
 st.write(
     """
     This project explores health, lifestyle and demographic indicators associated
-    with self-reported diabetes using the 2015 CDC Behavioral Risk Factor
-    Surveillance System (BRFSS) dataset.
-    """
+    with self-reported diabetes using a cleaned version of the [2015 CDC Behavioral Risk Factor
+    Surveillance System (BRFSS) dataset](%s) published by Alex Teboul on Kaggle.
+    """ 
+    % dataset_url
 )
 
 st.info(
@@ -49,7 +55,7 @@ with left:
     st.write(
         """
         The analysis investigates relationships between diabetes status and
-        health indicators before comparing classical machine-learning models
+        health indicators before comparing classical machine learning models
         under substantial class imbalance.
         """
     )
@@ -58,7 +64,7 @@ with left:
 
     st.markdown(
         """
-        **1. Exploratory analysis**  
+        **1. Exploratory data analysis**  
         Investigate prevalence patterns across health, lifestyle and demographic variables.
 
         **2. Statistical analysis**  
@@ -71,7 +77,7 @@ with left:
         Compare standard models with class-weighted alternatives.
 
         **5. Evaluation**  
-        Prioritise PR-AUC alongside ROC-AUC, precision, recall and F1.
+        Prioritise PR-AUC alongside balanced_accuracy, precision, recall and F1.
         """
     )
 
@@ -82,7 +88,7 @@ with right:
         df[TARGET]
         .value_counts()
         .sort_index()
-        .rename(index={0: "No diabetes", 1: "Diabetes"})
+        .rename(index={0: "No Diabetes", 1: "Prediabetes & Diabetes"})
         .reset_index()
     )
 
@@ -117,16 +123,16 @@ st.subheader("Final Model Performance")
 
 final_result = test_results.iloc[0]
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4 = st.columns([1.6, 1, 1, 1])
 
-col1.metric("Selected Model", final_result["Model"])
+col1.metric("Selected Model", "Weighted XGBoost")
 col2.metric("Test ROC-AUC", f"{final_result['ROC-AUC']:.3f}")
 col3.metric("Test PR-AUC", f"{final_result['PR-AUC']:.3f}")
 col4.metric("Diabetes Recall", f"{final_result['Diabetes recall']:.1%}")
 
 st.write(
     """
-    XGBoost produced the strongest overall discrimination. However, the gain over
+    Weighted XGBoost produced the strongest overall discrimination. However, the gain over
     simpler models was relatively modest, showing that Logistic Regression already
     captured much of the predictive signal contained in the survey indicators.
     """
@@ -156,6 +162,6 @@ with col2:
             - Stratified cross-validation
             - Hyperparameter tuning
             - Imbalanced classification
-            - Precision–recall trade-offs
+            - Precision-recall trade-offs
             """
         )

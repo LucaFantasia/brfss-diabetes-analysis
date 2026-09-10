@@ -36,8 +36,8 @@
         "model__colsample_bytree": 0.8
     },
     "scale_pos_weight": 6.177107752000647,
-    "selected_model": "XGBoost",
-    "selection_metric": "Validation PR-AUC",
+    "selected_model": "XGBoost \u2014 weighted",
+    "selection_reason": "Near-best PR-AUC with higher balanced accuracy",
     "random_state": 97,
     "cv_folds": 5
 }

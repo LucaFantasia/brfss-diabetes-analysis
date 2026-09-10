@@ -22,26 +22,12 @@ DATA_PATH = PROJECT_ROOT / "data" / "diabetes_binary_health_indicators_BRFSS2015
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 
 TARGET = "Diabetes_binary"
-
 ORDINAL_FEATURES = ["GenHlth", "Age", "Education", "Income"]
-
 NOMINAL_FEATURES = [
-    "HighBP",
-    "HighChol",
-    "CholCheck",
-    "Smoker",
-    "Stroke",
-    "HeartDiseaseorAttack",
-    "PhysActivity",
-    "Fruits",
-    "Veggies",
-    "HvyAlcoholConsump",
-    "AnyHealthcare",
-    "NoDocbcCost",
-    "DiffWalk",
-    "Sex"
+    "HighBP", "HighChol", "CholCheck", "Smoker", "Stroke", "HeartDiseaseorAttack",
+    "PhysActivity", "Fruits", "Veggies", "HvyAlcoholConsump", "AnyHealthcare",
+    "NoDocbcCost", "DiffWalk", "Sex"
 ]
-
 QUANTITATIVE_FEATURES = ["BMI", "MentHlth", "PhysHlth"]
 
 FEATURE_LABELS = {
@@ -67,7 +53,6 @@ FEATURE_LABELS = {
     "MentHlth": "Poor Mental Health Days",
     "PhysHlth": "Poor Physical Health Days"
 }
-
 ORDINAL_LABELS = {
     "GenHlth": {
         1: "Excellent",
@@ -77,36 +62,36 @@ ORDINAL_LABELS = {
         5: "Poor"
     },
     "Age": {
-        1: "18–24",
-        2: "25–29",
-        3: "30–34",
-        4: "35–39",
-        5: "40–44",
-        6: "45–49",
-        7: "50–54",
-        8: "55–59",
-        9: "60–64",
-        10: "65–69",
-        11: "70–74",
-        12: "75–79",
+        1: "18-24",
+        2: "25-29",
+        3: "30-34",
+        4: "35-39",
+        5: "40-44",
+        6: "45-49",
+        7: "50-54",
+        8: "55-59",
+        9: "60-64",
+        10: "65-69",
+        11: "70-74",
+        12: "75-79",
         13: "80+"
     },
     "Education": {
         1: "None / Kindergarten",
-        2: "Grades 1–8",
-        3: "Grades 9–11",
+        2: "Grades 1-8",
+        3: "Grades 9-11",
         4: "High School / GED",
         5: "Some College",
         6: "College Graduate"
     },
     "Income": {
         1: "<$10k",
-        2: "$10k–<$15k",
-        3: "$15k–<$20k",
-        4: "$20k–<$25k",
-        5: "$25k–<$35k",
-        6: "$35k–<$50k",
-        7: "$50k–<$75k",
+        2: "$10k-<$15k",
+        3: "$15k-<$20k",
+        4: "$20k-<$25k",
+        5: "$25k-<$35k",
+        6: "$35k-<$50k",
+        7: "$50k-<$75k",
         8: "$75k+"
     }
 }

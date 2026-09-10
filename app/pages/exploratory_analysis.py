@@ -1,5 +1,5 @@
 """
-Exploratory Analysis page for the BRFSS Diabetes Analysis dashboard.
+Exploratory Data Analysis page for the BRFSS Diabetes Analysis dashboard.
 
 This page allows users to interactively explore diabetes prevalence across
 ordinal, binary and quantitative health indicators.
@@ -23,13 +23,13 @@ from utils import (
 
 df = load_data()
 
-st.title("Exploratory Analysis")
-st.caption("Explore how diabetes prevalence varies across the BRFSS health indicators.")
+st.title("Exploratory Data Analysis")
+st.caption("Explore how prediabetes and diabetes prevalence varies across the BRFSS health indicators.")
 
 st.write(
     """
     Select a feature group and variable to explore its relationship with
-    self-reported diabetes status. These are descriptive associations and should
+    self-reported prediabetes/diabetes status. These are descriptive associations and should
     not be interpreted as causal effects.
     """
 )
@@ -61,7 +61,7 @@ if feature_type == "Ordinal":
         )
 
         fig.update_traces(
-            hovertemplate="<b>%{x}</b><br>Diabetes prevalence: %{y:.1f}%"
+            hovertemplate="<b>%{x}</b><br>Prediabetes | Diabetes prevalence: %{y:.1f}%"
             "<br>Respondents: %{customdata[0]:,}<extra></extra>"
         )
 
@@ -69,7 +69,7 @@ if feature_type == "Ordinal":
             height=380,
             margin=dict(l=20, r=20, t=20, b=20),
             xaxis_title=None,
-            yaxis_title="Diabetes prevalence (%)"
+            yaxis_title="Prediabetes | Diabetes prevalence (%)"
         )
 
         st.plotly_chart(fig, width="stretch", height=380, config={"displayModeBar": False})
@@ -108,7 +108,7 @@ elif feature_type == "Binary":
         fig.update_traces(
             texttemplate="%{text:.1f}%",
             textposition="outside",
-            hovertemplate="<b>%{x}</b><br>Diabetes prevalence: %{y:.1f}%"
+            hovertemplate="<b>%{x}</b><br>Prediabetes | Diabetes prevalence: %{y:.1f}%"
             "<br>Respondents: %{customdata[0]:,}<extra></extra>"
         )
 
@@ -160,7 +160,7 @@ else:
         fig.update_traces(
             texttemplate="%{text:.1f}%",
             textposition="outside",
-            hovertemplate="<b>%{x}</b><br>Diabetes prevalence: %{y:.1f}%"
+            hovertemplate="<b>%{x}</b><br>Prediabetes | Diabetes prevalence: %{y:.1f}%"
             "<br>Respondents: %{customdata[0]:,}<extra></extra>"
         )
 
@@ -190,7 +190,7 @@ st.subheader("Key EDA Findings")
 
 st.markdown(
     """
-    - Diabetes prevalence rises substantially as **self-reported general health worsens**.
+    - Prediabetes/Diabetes prevalence rises substantially as **self-reported general health worsens**.
     - Prevalence is generally higher among **older respondents**.
     - **High blood pressure, high cholesterol, difficulty walking and cardiovascular history**
       show notable prevalence differences.

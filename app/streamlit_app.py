@@ -1,7 +1,7 @@
 """
 Main entry point for the CDC BRFSS Diabetes Analysis dashboard.
 
-This file configures the Streamlit application, applies shared styling and
+This file configures the Streamlit application and
 defines navigation between the four dashboard pages.
 """
 
@@ -49,9 +49,9 @@ st.markdown(
 
 pages = [
     st.Page(APP_DIR / "pages" / "overview.py", title="Overview", icon="🏠", default=True),
-    st.Page(APP_DIR / "pages" / "exploratory_analysis.py", title="Exploratory Analysis", icon="🔎"),
+    st.Page(APP_DIR / "pages" / "exploratory_analysis.py", title="Exploratory Data Analysis", icon="🔎"),
     st.Page(APP_DIR / "pages" / "statistical_analysis.py", title="Statistical Analysis", icon="📐"),
-    st.Page(APP_DIR / "pages" / "model_performance.py", title="Model Performance", icon="🤖")
+    st.Page(APP_DIR / "pages" / "model_performance.py", title="Model Performance", icon="📈")
 ]
 
 page = st.navigation(pages)

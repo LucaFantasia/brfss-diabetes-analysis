@@ -1,5 +1,5 @@
 """
-Train and evaluate machine-learning models on the CDC BRFSS diabetes dataset.
+Train and evaluate classical ML models on the CDC BRFSS diabetes dataset.
 
 The script compares Logistic Regression, Decision Tree, Random Forest and
 XGBoost classifiers, including class-weighted variants for the imbalanced
@@ -9,13 +9,13 @@ A stratified 70/10/20 train/validation/test split is used. Hyperparameter
 selection is performed using 5-fold stratified cross-validation on the training
 set, with PR-AUC used as the primary selection metric.
 
-The validation set is used to compare fitted models. The model with the highest
-validation PR-AUC is evaluated once on the untouched test set.
+The validation set is used to compare fitted models. The model with near highest
+validation PR-AUC and balanced accuracy is evaluated once on an untouched test set.
 
 Outputs:
     outputs/cv_results.csv
     outputs/validation_results.csv
-    outputs/test_results.csvP
+    outputs/test_results.csv
     outputs/best_params.json
 """
 
@@ -206,7 +206,7 @@ def train_decision_trees(X_train, y_train, cross_validator):
 
 def train_random_forests(X_train, y_train, cross_validator):
     """
-    Tune standard and class-balanced Random Forest classifiers using randomized
+    Tune standard and class-balanced Random Forest classifiers using randomised
     hyperparameter search.
     """
 
@@ -255,7 +255,7 @@ def train_random_forests(X_train, y_train, cross_validator):
 
 def train_xgboost_models(X_train, y_train, cross_validator):
     """
-    Tune standard and class-weighted XGBoost classifiers using randomized search.
+    Tune standard and class-weighted XGBoost classifiers using randomised search.
 
     The weighted model uses the ratio of negative to positive training examples
     as scale_pos_weight.
@@ -333,14 +333,17 @@ def evaluate_models(fitted_models, X, y):
 
 def select_final_model(fitted_models, validation_results):
     """
-    Select the final model using validation PR-AUC.
+    Select the final model based on validation PR-AUC and balanced accuracy.
     """
 
-    best_index = validation_results["PR-AUC"].idxmax()
-    model_name = validation_results.loc[best_index, "Model"]
-    model = fitted_models[model_name]
+    best_pr_auc = validation_results["PR-AUC"].max()
+    candidate_models = validation_results[
+        validation_results["PR-AUC"] >= best_pr_auc - 0.010
+    ]
+    selected_model_name = candidate_models.loc[candidate_models["Balanced accuracy"].idxmax(), "Model"]
+    model = fitted_models[selected_model_name]
 
-    return model_name, model
+    return selected_model_name, model
 
 
 def evaluate_final_model(model_name, model, X_test, y_test):
@@ -431,7 +434,7 @@ def main():
 
     # Save experiment metadata
     all_best_params["selected_model"] = selected_model_name
-    all_best_params["selection_metric"] = "Validation PR-AUC"
+    all_best_params["selection_reason"] = "Near-best PR-AUC with higher balanced accuracy"
     all_best_params["random_state"] = SEED
     all_best_params["cv_folds"] = CV_FOLDS
 

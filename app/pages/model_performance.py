@@ -20,20 +20,20 @@ st.caption("Comparing classical classifiers under substantial class imbalance.")
 st.write(
     """
     Logistic Regression, Decision Tree, Random Forest and XGBoost models were
-    evaluated using a stratified 70/10/20 train/validation/test split. Five-fold
-    stratified cross-validation was used on the training set, with PR-AUC used as
-    the primary model-selection metric.
+    evaluated using a stratified 70/10/20 train/validation/test split respectively. Five-fold
+    stratified cross-validation was used on the training set, with PR-AUC and balanced accuracy used as
+    the primary and secondary model-selection metric respectively.
     """
 )
 
 final_result = test_results.iloc[0]
 
-col1, col2, col3, col4 = st.columns(4)
+col1, col2, col3, col4 = st.columns([1.6, 1, 1, 1])
 
-col1.metric("Final Model", final_result["Model"])
+col1.metric("Final Model", "Weighted XGBoost")
 col2.metric("Test ROC-AUC", f"{final_result['ROC-AUC']:.3f}")
 col3.metric("Test PR-AUC", f"{final_result['PR-AUC']:.3f}")
-col4.metric("Test F1", f"{final_result['Diabetes F1']:.3f}")
+col4.metric("Balanced Accuracy", f"{final_result['Balanced accuracy']:.3f}")
 
 st.divider()
 
@@ -154,7 +154,7 @@ with tab3:
     st.write(
         """
         Class-weighted models place greater importance on correctly identifying
-        diabetes cases. This primarily changes the precision–recall trade-off rather
+        diabetes cases. This primarily changes the precision-recall trade-off rather
         than substantially improving ranking performance.
         """
     )
@@ -226,7 +226,7 @@ with tab4:
     st.write(
         """
         After model selection was completed using training cross-validation and
-        validation PR-AUC, the selected XGBoost model was evaluated once on the
+        validation PR-AUC and balanced accuracy, the selected Weighted XGBoost model was evaluated once on the
         untouched test set.
         """
     )
@@ -244,14 +244,15 @@ with tab4:
     st.dataframe(display, width="stretch", hide_index=True)
 
     st.warning(
-        "The final model has limited diabetes recall at the default 0.50 threshold. "
-        "It should not be interpreted as a clinical screening or diagnostic system."
+        "Class weighting substantially improves diabetes recall, but increases false-positive "
+        "predictions. This model is intended for analytical demonstration only and should not "
+        "be used for clinical screening or diagnosis."
     )
 
 st.divider()
 
-with st.expander("Selected XGBoost hyperparameters"):
-    selected_model = best_params.get("selected_model", "XGBoost")
+with st.expander("Selected Weighted XGBoost hyperparameters"):
+    selected_model = best_params.get("selected_model", "XGBoost weighted")
 
     if selected_model in best_params:
         st.json(best_params[selected_model])
@@ -259,6 +260,6 @@ with st.expander("Selected XGBoost hyperparameters"):
         st.write("No saved hyperparameters were found for the selected model.")
 
 st.caption(
-    "Final model selection was based on validation PR-AUC. The test set was used "
+    "Final model selection was based on validation PR-AUC and balanced accuracy. The test set was used "
     "once after model selection."
 )

@@ -1,5 +1,5 @@
 """
-Evaluation methods for the CDC BRFSS diabetes classification experiments.
+Evaluation methods for the CDC BRFSS diabetes classification models.
 
 This module contains reusable functions for evaluating classifiers, extracting
 cross-validation results, and saving experiment outputs.
@@ -8,7 +8,6 @@ cross-validation results, and saving experiment outputs.
 import json
 
 import numpy as np
-import pandas as pd
 from sklearn.metrics import (
     accuracy_score,
     average_precision_score,
@@ -36,7 +35,7 @@ def evaluate_classifier(model_name, y_true, y_pred, y_probability):
 
     Accuracy is reported for completeness, but balanced accuracy, precision,
     recall, F1, ROC-AUC, and PR-AUC are particularly important because the
-    diabetes target is imbalanced.
+    diabetes target is heavily imbalanced.
     """
 
     return {
@@ -116,7 +115,7 @@ def make_json_safe(value):
 
 def save_results(dataframe, path):
     """
-    Save a pandas DataFrame as a CSV file without its index.
+    Save a pandas DataFrame as a CSV file.
     """
 
     path.parent.mkdir(parents=True, exist_ok=True)

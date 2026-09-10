@@ -1,20 +1,21 @@
 # CDC BRFSS Diabetes Analysis
 
-An exploratory, statistical and machine-learning analysis of health, lifestyle and demographic indicators associated with self-reported prediabetes or diabetes in the CDC Behavioral Risk Factor Surveillance System (BRFSS) dataset.
+An exploratory, statistical and machine learning analysis of health, lifestyle and demographic indicators associated with self-reported prediabetes or diabetes in the CDC Behavioral Risk Factor Surveillance System (BRFSS) dataset.
 
-The project combines exploratory data analysis, statistical hypothesis testing and classical machine-learning models, with particular attention given to the challenges of class-imbalanced classification.
+The project combines exploratory data analysis, statistical hypothesis testing and classical machine learning models, with particular attention given to the challenges of class-imbalanced classification.
 
-> This project is intended for statistical and machine-learning analysis only. It is not a clinical diagnostic or screening tool.
+> This project is intended for statistical and machine learning analysis only. It is not a clinical diagnostic or screening tool.
 
 ## Live Dashboard
 
-**Streamlit App:** [Add deployed Streamlit URL here]
+**Streamlit App:** https://brfssdiabetesanalysis.streamlit.app/
 
-The interactive dashboard presents the main exploratory findings, statistical analysis and machine-learning results from the project.
+The interactive dashboard presents the main exploratory findings, statistical analysis and machine learning results from the project.
 
 ## Dataset
 
-The project uses the **CDC Diabetes Health Indicators** dataset available through the UCI Machine Learning Repository.
+The project uses a cleaned version of the **2015 CDC Diabetes Health Indicators** dataset published by Alex Teboul on Kaggle.
+`diabetes_binary_health_indicators_BRFSS2015.csv` is the full imbalanced binary dataset used in this project, containing:
 
 - 253,680 observations
 - 21 predictor variables
@@ -25,13 +26,7 @@ The project uses the **CDC Diabetes Health Indicators** dataset available throug
   - `1` — prediabetes or diabetes
 
 Dataset:  
-https://archive.ics.uci.edu/dataset/891/cdc+diabetes+health+indicators
-
-UCI citation:
-
-> CDC Diabetes Health Indicators [Dataset]. (2017).  
-> UCI Machine Learning Repository.  
-> https://doi.org/10.24432/C53919
+https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset/data
 
 ## Project Structure
 
@@ -74,7 +69,7 @@ brfss-diabetes-analysis/
 
 ### Exploratory Data Analysis
 
-The exploratory analysis examines how the prevalence of the positive prediabetes/diabetes class varies across health, lifestyle and demographic indicators.
+The exploratory data analysis examines how the prevalence of the positive prediabetes/diabetes class varies across health, lifestyle and demographic indicators.
 
 Several notable patterns were observed:
 
@@ -121,28 +116,29 @@ The data was split using stratified sampling:
 
 Five-fold stratified cross-validation was performed on the training set.
 
-Hyperparameter tuning was performed for the Decision Tree, Random Forest and XGBoost models, with **PR-AUC used as the primary model-selection metric**.
+Hyperparameter tuning was performed for the Decision Tree, Random Forest and XGBoost models, with 
+**PR-AUC and balanced accuracy used as the primary and secondary model-selection metric respectively**.
 
 The test set was kept untouched until final model selection had been completed.
 
 ## Model Results
 
-XGBoost achieved the strongest overall discrimination.
+Weighted XGBoost achieved the strongest overall discrimination.
 
 | Metric | Final Test Result |
 | --- | ---: |
-| Accuracy | 0.868 |
-| Balanced Accuracy | 0.575 |
-| Precision | 0.587 |
-| Recall | 0.168 |
-| F1 Score | 0.262 |
+| Accuracy | 0.723 |
+| Balanced Accuracy | **0.751** |
+| Precision | 0.307 |
+| Recall | 0.789 |
+| F1 Score | 0.442 |
 | ROC-AUC | **0.831** |
 | PR-AUC | **0.438** |
 
 Five-fold cross-validation produced approximately:
 
 - ROC-AUC: **0.831 ± 0.002**
-- PR-AUC: **0.436 ± 0.005**
+- PR-AUC: **0.436 ± 0.004**
 
 The relatively small cross-validation variation suggests that performance was stable across the training folds.
 
@@ -172,7 +168,7 @@ The project highlights several useful observations:
 - The positive class combines respondents with prediabetes and diabetes.
 - The target is substantially imbalanced.
 - The data represents an older BRFSS survey and may not fully reflect current population health patterns.
-- The final classifier has relatively low minority-class recall at the default 0.50 threshold and should not be used as a clinical screening system.
+- The final classifier trades lower precision for substantially higher minority-class recall and should not be used as a clinical screening or diagnostic system.
 
 ## Running the Project Locally
 

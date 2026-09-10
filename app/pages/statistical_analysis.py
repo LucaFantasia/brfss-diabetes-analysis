@@ -8,7 +8,9 @@ ordinal and quantitative features.
 import plotly.express as px
 import streamlit as st
 
-from utils import calculate_statistical_results, format_p_value, load_data
+from utils import (
+    calculate_statistical_results, format_p_value, load_data
+)
 
 
 df = load_data()
@@ -148,7 +150,7 @@ with tab3:
 
     st.write(
         """
-        **Mann–Whitney U tests** compare the distributions of each quantitative
+        **Mann-Whitney U tests** compare the distributions of each quantitative
         variable between respondents with and without diabetes. Rank-biserial
         correlation is reported as the effect size.
         """
