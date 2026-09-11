@@ -77,7 +77,7 @@ with left:
         Compare standard models with class-weighted alternatives.
 
         **5. Evaluation**  
-        Prioritise PR-AUC alongside balanced_accuracy, precision, recall and F1.
+        Prioritise PR-AUC alongside balanced accuracy.
         """
     )
 
