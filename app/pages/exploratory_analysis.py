@@ -83,7 +83,7 @@ if feature_type == "Ordinal":
 
         st.metric("Lowest Prevalence", f"{min_prevalence:.1f}%")
         st.metric("Highest Prevalence", f"{max_prevalence:.1f}%")
-        st.metric("Difference", f"{max_prevalence - min_prevalence:.1f} pp")
+        st.metric("Difference", f"{max_prevalence - min_prevalence:.1f}%")
 
 elif feature_type == "Binary":
     feature = st.selectbox(
@@ -130,7 +130,7 @@ elif feature_type == "Binary":
         st.subheader("Prevalence Comparison")
         st.metric(summary.iloc[0]["Category"], f"{prevalence_0:.1f}%")
         st.metric(summary.iloc[1]["Category"], f"{prevalence_1:.1f}%")
-        st.metric("Difference", f"{difference:+.1f} pp")
+        st.metric("Difference", f"{difference:+.1f}%")
 
         st.caption(
             "A positive difference means diabetes prevalence is higher for the "
@@ -183,7 +183,7 @@ else:
 
         st.metric("Lowest Prevalence", f"{min_prevalence:.1f}%")
         st.metric("Highest Prevalence", f"{max_prevalence:.1f}%")
-        st.metric("Range", f"{max_prevalence - min_prevalence:.1f} pp")
+        st.metric("Range", f"{max_prevalence - min_prevalence:.1f}%")
 
 st.divider()
 st.subheader("Key EDA Findings")
